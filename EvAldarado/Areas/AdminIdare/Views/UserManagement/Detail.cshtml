@@ -1,0 +1,50 @@
+﻿@model EvAldarado.Models.Users
+
+<h2>Kullanıcı Detayları</h2>
+<div>
+    <h4>Kullanıcı</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Kullanıcı Adı
+        </dt>
+        <dd class="col-sm-10">
+            @Model.UserName
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Email
+        </dd>
+        <dt class="col-sm-2">
+            Adı
+        </dt>
+        <dd class="col-sm-10">
+            @Model.FirstName
+        </dd>
+        <dt class="col-sm-2">
+            Soyadı
+        </dt>
+        <dd class="col-sm-10">
+            @Model.LastName
+        </dd>
+        <dt class="col-sm-2">
+            Doğum Tarihi
+        </dt>
+        <dd class="col-sm-10">
+            @Model.DateOfBirth?.ToShortDateString()
+        </dd>
+    </dl>
+</div>
+<div>
+    <form asp-action="BlockUser" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger">Kullanıcıyı Engelle</button>
+    </form>
+    <form asp-action="UnblockUser" method="post" style="margin-top: 10px;">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-success">Kullanıcının Engelini Kaldır</button>
+    </form>
+    <a asp-action="Index" asp-controller="UserManagement" asp-area="Admin" class="btn btn-secondary" style="margin-top: 10px;">Listeye Dön</a>
+</div>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<PropertySearch.Models.SearchResult>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2>Search Results</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var result in Model)
+        {
+            <tr>
+                <td>@result.Title</td>
+                <td>@result.Location</td>
+                <td>@result.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>

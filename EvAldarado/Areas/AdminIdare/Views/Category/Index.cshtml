@@ -1,0 +1,231 @@
+﻿@model IEnumerable<EvAldarado.Models.Category>
+
+@{
+    ViewBag.Title = "Category CRUD";
+}
+
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Table</a></li>
+                            <li class="active">Data table</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddModal">Add Category</button>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblBody">
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            <input type="checkbox" @(item.IsActive ? "checked" : "") onclick="ToggleActive(@item.Id, this.checked)" />
+                                            <button class="btn btn-info btn-sm" onclick="Edit(@item.Id)">Edit</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="AddModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Category Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <input type="hidden" id="CategoryId" value="0">
+                    <div class="form-group">
+                        <label for="CategoryName">Name:</label>
+                        <input type="text" id="CategoryName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="IsActive">Active:</label>
+                        <input type="checkbox" id="IsActive">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="SaveButton" onclick="Save()">Save</button>
+                <button type="button" class="btn btn-primary" id="UpdateButton" style="display:none;" onclick="Update()">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            GetCategories();
+        });
+
+        function GetCategories() {
+            $.ajax({
+                url: '/AdminIdare/Category/CategoryList',
+                type: 'get',
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                success: function (response) {
+                    var tbody = '';
+                    if (!response || response.length === 0) {
+                        tbody += '<tr><td colspan="3">Categories not available</td></tr>';
+                    } else {
+                        $.each(response, function (index, item) {
+                            tbody += '<tr>';
+                            tbody += '<td>' + item.id + '</td>';
+                            tbody += '<td>' + item.name + '</td>';
+                            tbody += '<td>';
+                            tbody += '<input type="checkbox" ' + (item.isActive ? 'checked' : '') + ' onclick="ToggleActive(' + item.id + ', this.checked)" />';
+                            tbody += '<button class="btn btn-info btn-sm" onclick="Edit(' + item.id + ')">Edit</button>';
+                            tbody += '<button class="btn btn-danger btn-sm" onclick="Delete(' + item.id + ')">Delete</button>';
+                            tbody += '</td>';
+                            tbody += '</tr>';
+                        });
+                    }
+                    $('#tblBody').html(tbody);
+                },
+                error: function () {
+                    alert('Unable to fetch data');
+                }
+            });
+        }
+
+        function Save() {
+            var category = {
+                Id: $('#CategoryId').val(),
+                Name: $('#CategoryName').val(),
+                IsActive: $('#IsActive').prop('checked')
+            };
+            $.ajax({
+                url: '/AdminIdare/Category/Add',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(category),
+                success: function (response) {
+                    alert(response);
+                    $('#AddModal').modal('hide');
+                    GetCategories();
+                },
+                error: function () {
+                    alert('Unable to save category.');
+                }
+            });
+        }
+
+        function Edit(id) {
+            $.ajax({
+                url: '/AdminIdare/Category/Edit?id=' + id,
+                type: 'get',
+                success: function (response) {
+                    $('#CategoryId').val(response.id);
+                    $('#CategoryName').val(response.name);
+                    $('#IsActive').prop('checked', response.isActive);
+                    $('#SaveButton').hide();
+                    $('#UpdateButton').show();
+                    $('#AddModal').modal('show');
+                },
+                error: function () {
+                    alert('Unable to fetch category.');
+                }
+            });
+        }
+
+        function Update() {
+            var category = {
+                Id: $('#CategoryId').val(),
+                Name: $('#CategoryName').val(),
+                IsActive: $('#IsActive').prop('checked')
+            };
+            $.ajax({
+                url: '/AdminIdare/Category/Update',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(category),
+                success: function (response) {
+                    alert(response);
+                    $('#AddModal').modal('hide');
+                    GetCategories();
+                },
+                error: function () {
+                    alert('Unable to update category.');
+                }
+            });
+        }
+
+        function ToggleActive(id, isActive) {
+            $.ajax({
+                url: '/AdminIdare/Category/' + (isActive ? 'Activate' : 'Deactivate') + '?id=' + id,
+                type: 'post',
+                success: function (response) {
+                    alert(response);
+                    GetCategories();
+                },
+                error: function () {
+                    alert('Unable to change category status.');
+                }
+            });
+        }
+
+        function Delete(id) {
+            if (confirm('Are you sure you want to delete this category?')) {
+                $.ajax({
+                    url: '/AdminIdare/Category/Delete?id=' + id,
+                    type: 'post',
+                    success: function (response) {
+                        alert(response);
+                        GetCategories();
+                    },
+                    error: function () {
+                        alert('Unable to delete category.');
+                    }
+                });
+            }
+        }
+    </script>
+}

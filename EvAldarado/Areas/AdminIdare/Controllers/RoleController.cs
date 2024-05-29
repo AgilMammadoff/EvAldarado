@@ -1,0 +1,123 @@
+﻿using EvAldarado.Models;
+using EvAldarado.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace EvAldarado.Areas.AdminIdare.Controllers
+{
+    [Area("AdminIdare")]
+    public class RoleController : Controller
+    {
+        private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<Users> _userManager;
+
+        public RoleController(RoleManager<AppRole> roleManager, UserManager<Users> userManager)
+        {
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+
+        public IActionResult Role()
+        {
+            return View(_roleManager.Roles.ToList());
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(Role role)
+        {
+            if (ModelState.IsValid)
+            {
+                AppRole appRole = new AppRole()
+                {
+                    Name = role.Name
+                };
+                var result = await _roleManager.CreateAsync(appRole);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Role");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(role);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var result = await _roleManager.FindByIdAsync(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(AppRole role)
+        {
+            if (ModelState.IsValid)
+            {
+                await _roleManager.UpdateAsync(role);
+                return RedirectToAction("Role");
+            }
+            return View(role);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await _roleManager.FindByIdAsync(id);
+            if (result != null)
+            {
+                await _roleManager.DeleteAsync(result);
+            }
+            return RedirectToAction("Role");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignRole(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            TempData["UserId"] = user.Id;
+            var roles = _roleManager.Roles.ToList();
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var list = new List<AssignRole>();
+            foreach (var item in roles)
+            {
+                var model = new AssignRole()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Status = userRoles.Contains(item.Name)
+                };
+                list.Add(model);
+            }
+            return View(list);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(List<AssignRole> list)
+        {
+            var user = await _userManager.FindByIdAsync(TempData["UserId"].ToString());
+            foreach (var item in list)
+            {
+                if (item.Status)
+                {
+                    await _userManager.AddToRoleAsync(user, item.Name);
+                }
+                else
+                {
+                    await _userManager.RemoveFromRoleAsync(user, item.Name);
+                }
+            }
+            return RedirectToAction("Users", "User");
+        }
+    }
+}

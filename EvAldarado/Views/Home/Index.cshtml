@@ -1,0 +1,369 @@
+﻿@model HomeViewModel
+
+
+
+
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<section class="banner-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="banner-content" data-aos="fade-down">
+					<h1>Arzuladığınız Evi Tapın <span>Kirayə, Alqı və Satqı...</span></h1>
+					<p>3000-dən çox seçim</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="banner-search" data-aos="fade-down">
+					<div class="banner-tab">
+						<ul class="nav nav-tabs" id="bannerTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<a class="nav-link active" id="buy-property" data-toggle="tab" href="#buy_property" role="tab" aria-controls="buy_property" aria-selected="true">
+									<img src="~/img/icons/buy-icon.svg" alt="icon"> Buy a Property
+								</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" id="rent-property" data-toggle="tab" href="#rent_property" role="tab" aria-controls="rent_property" aria-selected="false">
+									<img src="~/img/icons/rent-icon.svg" alt="icon"> Rent a Property
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="tab-content" id="bannerTabContent">
+						<div class="tab-pane fade show active" id="buy_property" role="tabpanel" aria-labelledby="buy-property">
+							<div class="banner-tab-property">
+								<form method="get" action="/Home/Search">
+									<div class="banner-property-info">
+										<div class="banner-property-grid">
+											<input type="text" name="Keyword" class="form-control" placeholder="Açar Söz....">
+										</div>
+										<div class="banner-property-grid">
+											<select name="PropertyType" class="form-select">
+												<option value="">Əmlak Növü</option>
+												<option value="Bina">Bina</option>
+												<option value="Bağ Evi">Bağ Evi</option>
+											</select>
+										</div>
+										<div class="banner-property-grid">
+											<input type="text" name="Location" class="form-control" placeholder="Harada">
+										</div>
+										<div class="banner-property-grid">
+											<input type="text" name="MinPrice" class="form-control" placeholder="Min Qiymət">
+										</div>
+										<div class="banner-property-grid">
+											<input type="text" name="MaxPrice" class="form-control" placeholder="Mak Qiymət">
+										</div>
+										<div class="banner-property-grid">
+											<button type="submit" class="btn btn-primary"><span><i class="feather-search"></i></span></button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="rent_property" role="tabpanel" aria-labelledby="rent-property">
+							<div class="banner-tab-property">
+								<form method="get" action="/Home/Search">
+									<div class="banner-property-info">
+										<div class="banner-property-grid">
+											<input type="text" name="Keyword" class="form-control" placeholder="Açar Söz....">
+										</div>
+										<div class="banner-property-grid">
+											<select name="PropertyType" class="form-select">
+												<option value="">Əmlak Növü</option>
+												<option value="Bina">Bina</option>
+												<option value="Bağ Evi">Bağ Evi</option>
+											</select>
+										</div>
+										<div class="banner-property-grid">
+											<input type="text" name="Location" class="form-control" placeholder="Harada">
+										</div>
+										<div class="banner-property-grid">
+											<input type="text" name="MinPrice" class="form-control" placeholder="Min Qiymət">
+										</div>
+										<div class="banner-property-grid">
+											<input type="text" name="MaxPrice" class="form-control" placeholder="Mak Qiymət">
+										</div>
+										<div class="banner-property-grid">
+											<button type="submit" class="btn btn-primary"><span><i class="feather-search"></i></span></button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+<section class="property-type-sec">
+	<div class="section-shape-imgs">
+		<img src="~/img/shapes/property-sec-bg-1.png" class="rectangle-left" alt="icon">
+		<img src="~/img/shapes/property-sec-bg-2.png" class="rectangle-right" alt="icon">
+		<img src="~/img/icons/red-circle.svg" class="bg-09" alt="Image">
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="section-heading" data-aos="fade-down" data-aos-duration="1000">
+					<h2>İstənilən növ əmlak</h2>
+					<div class="sec-line">
+						<span class="sec-line1"></span>
+						<span class="sec-line2"></span>
+					</div>
+					<p> Satın, Alın ya da İcarəyə Götrün: Modern bina evləri-dən bağçalı villalara qədər geniş seçimlər sizin seçiminizi gözləyir. </p>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<!-- Swiper -->
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						@foreach (var slider in Model.Sliders)
+						{
+							<div class="swiper-slide property-card" data-aos="fade-down" data-aos-duration="1000">
+								<div class="property-img">
+									<img src="@slider.ImageUrl" alt="icon">
+								</div>
+								<div class="property-name">
+									<h4>@slider.Name</h4>
+									<p>@slider.Description</p>
+								</div>
+							</div>
+						}
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+					<!-- Add Navigation -->
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section class="feature-property-sec">
+	<div class="container">
+		<div class="section-heading text-center">
+			<h2>Featured Properties for Sales</h2>
+			<div class="sec-line">
+				<span class="sec-line1"></span>
+				<span class="sec-line2"></span>
+			</div>
+			<p>Hand-Picked selection of quality places</p>
+		</div>
+		<div class="row">
+			@foreach (var item in Model.UserProducts)
+			{
+				<div class="col-md-4">
+					<div class="items_list items">
+						<div class="slider-col">
+							<div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+								<div class="profile-widget">
+									<div class="doc-img">
+										<a asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id" class="property-img">
+											<img class="img-fluid" alt="Property Image" src="~/Uploadsproducts/@item.Imagine">
+										</a>
+
+										<div class="product-amount">
+											<span>₼ @item.Cost</span>
+										</div>
+										<div class="feature-rating">
+											@* Add logic here if item is featured *@
+											<div>
+												<div class="featured">
+													<span>Featured</span>
+												</div>
+											</div>
+											<a href="javascript:void(0)">
+												<div class="favourite">
+													<span><i class="fa-regular fa-heart"></i></span>
+												</div>
+											</a>
+										</div>
+										<div class="user-avatar">
+											<!-- Assuming there's a default user avatar -->
+											<img src="~/img/profiles/avatar-default.jpg" alt="User">
+										</div>
+									</div>
+									<div class="pro-content">
+										<div class="rating">
+											<!-- Add rating logic here -->
+											<span class="rating-count">
+												<!-- Replace the hardcoded stars with dynamic ones based on item rating -->
+												<i class="fa-solid fa-star checked"></i>
+												<i class="fa-solid fa-star checked"></i>
+												<i class="fa-solid fa-star checked"></i>
+												<i class="fa-solid fa-star checked"></i>
+												<i class="fa-solid fa-star checked"></i>
+											</span>
+											<span class="rating-review">5.0 (50 Reviews)</span>
+										</div>
+										<h3 class="title">
+											<!-- Assuming there's a property name -->
+											<a href="rent-details.html">@item.Description</a>
+										</h3>
+										<p><i class="feather-map-pin"></i>@item.AgentName</p>
+										<ul class="d-flex details">
+											<li>
+												<img src="~/img/icons/bed-icon.svg" alt="bed-icon">
+												@item.Room Room
+											</li>
+											<li>
+												<img src="~/img/icons/bath-icon.svg" alt="bath-icon">
+												@item.Floor Floor
+											</li>
+											<li>
+												<img src="~/img/icons/building-icon.svg" alt="building-icon">
+												@item.SquareRoot Sqft
+											</li>
+										</ul>
+										<ul class="property-category d-flex justify-content-between">
+											<li>
+												<span class="list">Listed on : </span>
+												<span class="date">@item.DateAdvertisement.ToString("dd MMM yyyy")</span>
+											</li>
+											<li>
+												<span class="category list">Category : </span>
+												<span class="category-value date">@item.Category</span>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+		<div class="view-property-btn d-flex justify-content-center" data-aos="fade-down" data-aos-duration="1000">
+			<a href="rent-property-grid.html" class="btn-primary">View All Properties</a>
+		</div>
+	</div>
+	<div class="bg-imgs">
+		<img src="~/img/bg/price-bg.png" class="bg-01" alt="icon">
+		<img src="~/img/icons/blue-circle.svg" class="bg-02" alt="icon">
+		<img src="~/img/icons/red-circle.svg" class="bg-03" alt="icon">
+	</div>
+</section>
+
+
+
+
+
+
+
+<section class="counter-sec">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+				<div class="counter-box flex-fill" data-aos="fade-down" data-aos-duration="2000">
+					<div class="counter-icon">
+						<img src="~/img/icons/counter-icon-1.svg" alt="icon">
+					</div>
+					<div class="counter-value">
+						<h3 class="dash-count"><span class="counter-up">50</span>K</h3>
+						<h5>Listings Added </h5>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+				<div class="counter-box flex-fill" data-aos="fade-down" data-aos-duration="2000">
+					<div class="counter-icon">
+						<img src="~/img/icons/counter-icon-2.svg" alt="icon">
+					</div>
+					<div class="counter-value">
+						<h3 class="dash-count"><span class="counter-up">3000</span>+</h3>
+						<h5>Agents Listed </h5>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+				<div class="counter-box flex-fill" data-aos="fade-down" data-aos-duration="2000">
+					<div class="counter-icon">
+						<img src="~/img/icons/counter-icon-3.svg" alt="icon">
+					</div>
+					<div class="counter-value">
+						<h3 class="dash-count"><span class="counter-up">2000</span>+</h3>
+						<h5>Sales Completed </h5>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+				<div class="counter-box flex-fill" data-aos="fade-down" data-aos-duration="2000">
+					<div class="counter-icon">
+						<img src="~/img/icons/counter-icon-4.svg" alt="icon">
+					</div>
+					<div class="counter-value">
+						<h3 class="dash-count"><span class="counter-up">5000</span>+</h3>
+						<h5>Users</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+<section class="price-section">
+	<div class="container">
+		<div class="pricing-tab">
+			<div class="section-heading">
+				<div class="sec-line">
+					<span class="sec-line1"></span>
+					<span class="sec-line2"></span>
+				</div>
+			</div>
+		</div>
+		<div class="tab-content" id="pills-tabContent">
+
+			<div class="tab-pane fade active show" id="monthly-price" role="tabpanel" aria-labelledby="pills-profile-tab">
+				<div class="row justify-content-center">
+
+					<div class="col-lg-4 col-md-6">
+						<div class="price-card aos" data-aos="flip-right" data-aos-easing="ease-out-cubic">
+							<div class="price-title">
+								<h3>Standard</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+							</div>
+							<div class="price-features">
+								<h5>Key Features</h5>
+							</div>
+							<div class="price-btn">
+								<a href="login.html" class="btn-primary">Get Quote</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			
+
+		</div>
+	</div>
+	<div class="bg-imgs">
+		<img src="~/img/bg/price-bg.png" class="bg-05" alt="icon">
+	</div>
+</section>
+
+
+

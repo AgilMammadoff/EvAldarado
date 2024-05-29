@@ -1,0 +1,119 @@
+﻿@model IEnumerable<UserProducts>
+
+<!-- Page Header -->
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center">List of Products</h2>
+        <a class="btn btn-primary" asp-controller="UserProducts" asp-action="Create">
+            <i class="fas fa-plus-circle"></i> Yeni Elan
+        </a>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <!-- Image Container -->
+                    <div class="position-relative">
+                        <img class="card-img-top" src="~/Uploadsproducts/@product.Imagine" alt="@product.AdvertisementName" style="height: 200px; object-fit: cover;">
+                        @if (product.IsVip)
+                        {
+                            <span class="badge badge-warning position-absolute" style="top: 10px; right: 10px; font-size: 0.9em;">
+                                VIP
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <h5 class="card-title">@product.AdvertisementName</h5>
+                        <p class="card-text text-muted">
+                            <strong>Agent:</strong> @product.AgentName<br>
+                            <strong>Kateqoriya:</strong> @product.Category<br>
+                            <strong>Sahəsi:</strong> @product.SquareRoot m<sup>2</sup><br>
+                            <strong>Mərtəbə:</strong> @product.Floor<br>
+                            <strong>Otaq sayı:</strong> @product.Room<br>
+                            <strong>Təmir:</strong> @(product.Repaired ? "Bəli" : "Xeyr")<br>
+                            <strong>Tikinti Tarixi:</strong> @product.DateBuilt.ToString("dd/MM/yyyy")<br>
+                            <strong>Elan Tarixi:</strong> @product.DateAdvertisement.ToString("dd/MM/yyyy")<br>
+                            <strong>Qiymət:</strong> @product.Cost ₼<br>
+                            <strong>Aqent E-poçtu:</strong> @product.AgentEmail<br>
+                            <strong>Aqent Telefonu:</strong> @product.AgentTelephone<br>
+                        </p>
+                        <p class="card-text">@product.Description</p>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a class="btn btn-primary btn-sm" asp-controller="UserProducts" asp-action="Edit" asp-route-id="@product.Id">
+                                <i class="fas fa-edit"></i> Redaktə
+                            </a>
+                            <a class="btn btn-info btn-sm" asp-controller="UserProducts" asp-action="Show" asp-route-id="@product.Id">
+                                <i class="fas fa-eye"></i> Baxmaq
+                            </a>
+                            <form id="deleteForm-@product.Id" method="post" asp-controller="UserProducts" asp-action="Delete" asp-route-id="@product.Id" style="display:inline;">
+                                <button type="button" onclick="confirmDelete('@product.Id')" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Silmək
+                                </button>
+                            </form>
+                        </div>
+                        <a class="btn btn-warning btn-sm" asp-controller="Vip" asp-action="Checkout" asp-route-id="@product.Id">
+                            <i class="fas fa-star"></i> VIP Yap
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Delete Confirmation Script -->
+<script>
+    function confirmDelete(productId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this item.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteForm-' + productId).submit();
+            }
+        });
+    }
+</script>
+
+<!-- Styles for Card Layout -->
+<style>
+    .card {
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+    .card-title {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .card-text {
+        font-size: 0.9em;
+    }
+
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: #fff;
+    }
+</style>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<EvAldarado.Models.Users>
+
+<h2>User Management</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>DateOfBirth</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.DateOfBirth?.ToShortDateString()</td>
+                <td>
+                    <a href="@Url.Action("Details", "UserManagement", new { area = "Admin", id = user.Id })" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

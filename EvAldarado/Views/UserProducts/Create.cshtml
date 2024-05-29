@@ -1,0 +1,219 @@
+﻿@model EvAldarado.Models.ProductDto
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .card.shadow {
+        border: none;
+        border-radius: 20px;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        border: 6px solid #08545e;
+        border-radius: 20px;
+        padding: 30px;
+        background: linear-gradient(145deg, #e6f2f7, #c2e0e8);
+    }
+
+    .form-control,
+    .form-select {
+        border: 2px solid #08545e;
+        border-radius: 10px;
+        padding: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .form-control:hover,
+        .form-select:hover {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+    .form-label {
+        font-weight: bold;
+        color: #08545e;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 10px;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-outline-secondary {
+        border-color: #08545e;
+        color: #08545e;
+        border-radius: 10px;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #08545e;
+            color: #ffffff;
+        }
+
+    .text-danger {
+        color: #dc3545 !important;
+    }
+
+    .mb-3 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 2rem;
+        color: #08545e;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Yeni Məhsul</h2>
+            <form asp-controller="UserProducts" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="AdvertisementName" class="form-label">Reklam Adı</label>
+                    <input type="text" class="form-control" asp-for="AdvertisementName" placeholder="Reklam adını daxil edin">
+                    <span asp-validation-for="AdvertisementName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="AgentName" class="form-label">Agent Adı</label>
+                    <input type="text" class="form-control" asp-for="AgentName" placeholder="Agent adını daxil edin">
+                    <span asp-validation-for="AgentName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="DocumentType" class="form-label">Sənəd</label>
+                    <input type="text" class="form-control" asp-for="DocumentType" placeholder="Sənəd növünü daxil edin">
+                    <span asp-validation-for="DocumentType" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Category" class="form-label">Kateqoriya</label>
+                    <select class="form-select" asp-for="Category">
+                        <option value="Residential">Bina</option>
+                        <option value="Garden">Həyət Evi</option>
+                        <option value="Office">Ofis</option>
+                        <option value="Villa">Villa</option>
+                        <option value="Land">Torpaq</option>
+                        <option value="Other">Digər</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="SquareRoot" class="form-label">Kvadrat Kök</label>
+                    <input type="number" class="form-control" asp-for="SquareRoot" placeholder="Sahəsi" min="0">
+                    <span asp-validation-for="SquareRoot" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Floor" class="form-label">Mərtəbə</label>
+                    <input type="number" class="form-control" asp-for="Floor" placeholder="Mərtəbə sayını daxil edin" min="0">
+                    <span asp-validation-for="Floor" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Room" class="form-label">Otaq Sayı</label>
+                    <input type="number" class="form-control" asp-for="Room" placeholder="Otaq sayını daxil edin" min="0">
+                    <span asp-validation-for="Room" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="Repaired">
+                    <label class="form-check-label" for="Repaired">Təmirli</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="DateBuilt" class="form-label">Tikinti Tarixi</label>
+                    <input type="date" class="form-control" asp-for="DateBuilt">
+                    <span asp-validation-for="DateBuilt" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Təsvir</label>
+                    <textarea class="form-control" asp-for="Description" placeholder="Məhsul təsviri daxil edin"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Cost" class="form-label">Qiymət</label>
+                    <input type="number" class="form-control" asp-for="Cost" placeholder="Qiyməti daxil edin" min="0">
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="AgentEmail" class="form-label">Agent E-mail</label>
+                    <input type="email" class="form-control" asp-for="AgentEmail" placeholder="Agentin e-mail adresini daxil edin">
+                    <span asp-validation-for="AgentEmail" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="AgentTelephone" class="form-label">Agent Telefonu</label>
+                    <input type="tel" class="form-control" asp-for="AgentTelephone" placeholder="Agentin telefon nömrəsini daxil edin">
+                    <span asp-validation-for="AgentTelephone" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="BaseImageFile" class="form-label">Əsas Şəkil</label>
+                    <input type="file" class="form-control" asp-for="BaseImageFile" />
+                    <span asp-validation-for="BaseImageFile" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imagesFiles" class="form-label">Əlavə Şəkillər</label>
+                    <input type="file" class="form-control" asp-for="imagesFiles" multiple />
+                    <span asp-validation-for="imagesFiles" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 d-grid">
+                        <button type="submit" class="btn btn-primary">Təsdiqlə</button>
+                    </div>
+                    <div class="col-md-6 d-grid">
+                        <a class="btn btn-outline-secondary" asp-controller="UserProducts" asp-action="Index" role="button">Ləğv et</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('input[type="number"]').forEach(function (input) {
+        input.addEventListener('input', function () {
+            if (this.value < 0) {
+                this.value = 0;
+            }
+        });
+    });
+</script>

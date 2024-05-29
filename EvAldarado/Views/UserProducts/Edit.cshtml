@@ -1,0 +1,178 @@
+﻿@model EvAldarado.Models.ProductDto
+<<style>
+     .card.shadow .card-body {
+         border: 6px solid #08545e; /* Change color to black */
+         border-radius: 20px; /* Optional: Add border radius for a rounded look */
+     }
+
+     /* Make input borders thicker and change color to black */
+     input[type="text"],
+     input[type="number"],
+     input[type="email"],
+     input[type="tel"],
+     select.form-select,
+     textarea.form-control,
+     input[type="file"] {
+         border: 3px solid #08545e; /* Change color to black */
+     }
+</style>
+
+</style>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Redaktə</h2>
+            <form asp-controller="UserProducts" asp-action="Edit" method="post" enctype="multipart/form-data">
+
+
+
+                <div class="mb-3 row">
+                    <label for="AdvertisementName" class="col-md-4 col-form-label">ID</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="Id" name="Id" value="@ViewData["ProductId"]" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="AdvertisementName" class="col-md-4 col-form-label">Reklam Adı</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" asp-for="AdvertisementName" placeholder="Reklam adını daxil edin">
+                        <span asp-validation-for="AdvertisementName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="AgentName" class="col-md-4 col-form-label">Agent Adı</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" asp-for="AgentName" placeholder="Agent adını daxil edin">
+                        <span asp-validation-for="AgentName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="AgentName" class="col-md-4 col-form-label">Sənəd</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" asp-for="DocumentType" placeholder="Agent adını daxil edin">
+                        <span asp-validation-for="DocumentType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="Category" class="col-md-4 col-form-label">Kateqoriya</label>
+                    <div class="col-md-8">
+                        <select class="form-select" asp-for="Category">
+                            <option value="Residential">Bina</option>
+                            <option value="Garden">Həyət Evi</option>
+                            <option value="Office">Ofis</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Land">Torpaq</option>
+                            <option value="Other">Digər</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="mb-3 row">
+                    <label for="SquareRoot" class="col-md-4 col-form-label">Kvadrat Kök</label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" asp-for="SquareRoot" placeholder="Sahəsi">
+                        <span asp-validation-for="SquareRoot" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="Floor" class="col-md-4 col-form-label">Mərtəbə</label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" asp-for="Floor" placeholder="Mərtəbə sayını daxil edin">
+                        <span asp-validation-for="Floor" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="Room" class="col-md-4 col-form-label">Otaq Sayı</label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" asp-for="Room" placeholder="Otaq sayını daxil edin">
+                        <span asp-validation-for="Room" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="Repaired" class="col-md-4 col-form-label">Təmirli</label>
+                    <div class="col-md-8">
+                        <input class="form-check-input" type="checkbox" asp-for="Repaired">
+                    </div>
+                </div>
+
+
+
+                <div class="mb-3 row">
+                    <label for="DateBuilt" class="col-md-4 col-form-label">Tikinti Tarixi</label>
+                    <div class="col-md-8">
+                        <input type="date" class="form-control" asp-for="DateBuilt">
+                        <span asp-validation-for="DateBuilt" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="mb-3 row">
+                    <label for="Description" class="col-md-4 col-form-label">Təsvir</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" asp-for="Description" placeholder="Məhsul təsviri daxil edin"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="Cost" class="col-md-4 col-form-label">Qiymət</label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" asp-for="Cost" placeholder="Qiyməti daxil edin">
+                        <span asp-validation-for="Cost" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="AgentEmail" class="col-md-4 col-form-label">Agent E-mail</label>
+                    <div class="col-md-8">
+                        <input type="email" class="form-control" asp-for="AgentEmail" placeholder="Agentin e-mail adresini daxil edin">
+                        <span asp-validation-for="AgentEmail" the="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="AgentTelephone" class="col-md-4 col-form-label">Agent Telefonu</label>
+                    <div class="col-md-8">
+                        <input type="tel" class="form-control" asp-for="AgentTelephone" placeholder="Agentin telefon nömrəsini daxil edin">
+                        <span asp-validation-for="AgentTelephone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                < <!-- Display Current Image -->
+                <div class="row mb-3">
+                    <label class="col-md-4 col-form-label">Current Base Image</label>
+                    <div class="col-md-8">
+                        <img src="@($"/Uploadsproducts/{ViewData["ImageFileName"]}")" width="150" alt="Current Image">
+                    </div>
+                </div>
+
+                <!-- Upload New Image -->
+                <div class="mb-3 row">
+                    <label for="BaseImageFile" class="col-md-4 col-form-label">New Base Image</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="file" asp-for="BaseImageFile">
+                        <span asp-validation-for="BaseImageFile" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-md-4 col-md-4 d-grid">
+                        <button type="submit" class="btn btn-primary">Təsdiqlə</button>
+                    </div>
+                    <div class="col-md-4 d-grid">
+                        <a class="btn btn-outline-secondary" asp-controller="UserProducts" asp-action="Index" role="button">Ləğv et</a>
+                    </div>
+                    <div class="col-md-4 d-grid">
+                        <a class="btn btn-outline-secondary" asp-controller="UserProducts" asp-action="Index" role="button">Ləğv et</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

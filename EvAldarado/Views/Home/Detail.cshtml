@@ -1,0 +1,120 @@
+﻿@model EvAldarado.Models.ProductDto
+<style>
+    .card.shadow .card-body {
+        border: 6px solid #08545e; /* Rəngi qara olaraq dəyişin */
+        border-radius: 20px; /* İstəyə uyğun olaraq radiusu əlavə edin */
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Məhsul Detalları</h2>
+
+            <div class="mb-3 row">
+                <label for="AdvertisementName" class="col-md-4 col-form-label">ID</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="Id" name="Id" value="@ViewData["ProductId"]" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="AdvertisementName" class="col-md-4 col-form-label">Elan Adı</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" asp-for="AdvertisementName" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="AgentName" class="col-md-4 col-form-label">Agent Adı</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" asp-for="AgentName" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="DocumentType" class="col-md-4 col-form-label">Sənəd Növü</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" asp-for="DocumentType" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Category" class="col-md-4 col-form-label">Kateqoriya</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" asp-for="Category" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="SquareRoot" class="col-md-4 col-form-label">Kvadrat Kök</label>
+                <div class="col-md-8">
+                    <input type="number" class="form-control" asp-for="SquareRoot" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Floor" class="col-md-4 col-form-label">Mərtəbə</label>
+                <div class="col-md-8">
+                    <input type="number" class="form-control" asp-for="Floor" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Room" class="col-md-4 col-form-label">Otaq</label>
+                <div class="col-md-8">
+                    <input type="number" class="form-control" asp-for="Room" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Repaired" class="col-md-4 col-form-label">Təmirli</label>
+                <div class="col-md-8">
+                    <input class="form-check-input" type="checkbox" asp-for="Repaired" disabled>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="DateBuilt" class="col-md-4 col-form-label">İnşa Tarixi</label>
+                <div class="col-md-8">
+                    <input type="date" class="form-control" asp-for="DateBuilt" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Description" class="col-md-4 col-form-label">Təsvir</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" asp-for="Description" readonly></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Cost" class="col-md-4 col-form-label">Qiymət</label>
+                <div class="col-md-8">
+                    <input type="number" class="form-control" asp-for="Cost" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="AgentEmail" class="col-md-4 col-form-label">Agent E-poçtu</label>
+                <div class="col-md-8">
+                    <input type="email" class="form-control" asp-for="AgentEmail" readonly>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="AgentTelephone" class="col-md-4 col-form-label">Agent Telefonu</label>
+                <div class="col-md-8">
+                    <input type="tel" class="form-control" asp-for="AgentTelephone" readonly>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="offset-md-4 col-md-4 d-grid">
+                    <a class="btn btn-outline-secondary" asp-controller="UserProducts" asp-action="Index" role="button">Siyahıya Qayıt</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
